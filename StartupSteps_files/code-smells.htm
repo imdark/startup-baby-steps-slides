@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+<meta charset="utf-8">
+<title>Coding Horror: Code Smells</title> 
+<link rel="stylesheet" href="code-smells_data/styles-site.css" type="text/css"> 
+<link rel="stylesheet" href="code-smells_data/styles-site-mobile.css" type="text/css" media="handheld"> 
+<link rel="stylesheet" href="code-smells_data/styles-site-print.css" type="text/css" media="print"> 
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.feedburner.com/codinghorror/"> 
+<link rel="canonical" href="StartupSteps_files/code-smells.htm">
+<link rel="apple-touch-icon" href="http://www.codinghorror.com/.a/6a0120a85dcdae970b017615c1941f970c-pi">
+
+<script type="text/javascript" async="" src="code-smells_data/js"></script><script> 
+var TPApp = {};
+TPApp.app_uri = "http://www.typepad.com/";
+</script> 
+
+<link rel="shortcut icon" href="http://www.codinghorror.com/favicon.ico"> 
+
+<link rel="stylesheet" type="text/css" href="code-smells_data/nrelate-panels-all.css">
+
+<link href="code-smells_data/sidebar.css" type="text/css" rel="stylesheet"></head>
+
+<body><div id="header"> 
+
+<div style="float:left; "> 
+<a href="http://www.codinghorror.com/blog/"><img src="code-smells_data/coding-horror-official-logo-small.png" alt="I &lt;3 Steve McConnell" height="91" width="100"></a>
+</div> 
+<div style="float:left; margin-top:10px;"> 
+<a href="http://www.codinghorror.com/blog/"><img alt="Coding Horror" src="code-smells_data/coding-horror-text.png" height="25" width="275"></a><br> 
+<span class="description">programming and human factors<br>by Jeff Atwood</span> 
+</div> 
+
+<div style="float:right; margin-top:20px;" id="searchbox"> 
+<form action="http://www.google.com" id="cse-search-box">
+  <div>
+    <input name="cx" value="partner-pub-6424649804324178:5453723522" type="hidden">
+    <input name="ie" value="UTF-8" type="hidden">
+    <input style="border: 1px solid rgb(126, 157, 185); padding: 2px; background: url(&quot;http://www.google.com/cse/intl/en/images/google_custom_search_watermark.gif&quot;) no-repeat scroll left center rgb(255, 255, 255);" name="q" size="55" type="text">
+    <input name="sa" value="Search" type="submit">
+  </div>
+<input value="www.codinghorror.com/blog/2006/05/code-smells.html" name="siteurl" type="hidden"><input value="strut.io/editor/preview_export/impress.html" name="ref" type="hidden"><input name="ss" type="hidden"></form>
+
+<script type="text/javascript" src="code-smells_data/brand"></script>
+
+</div> 
+
+</div> <!-- header -->
+
+<div id="container"> 
+<div class="blog"> 
+<div class="blogbody"> 
+
+<h2 class="title"><a href="http://www.codinghorror.com/blog/2006/05/code-smells.html" class="title-link">Code Smells</a></h2> 
+
+<h3 class="date">May 18, 2006</h3> 
+
+<p>
+I'm often asked why the book <a href="http://www.amazon.com/exec/obidos/ASIN/0201485672/codihorr-20">Refactoring</a> isn't included in my <a href="http://www.codinghorror.com/blog/archives/000020.html">recommended developer reading list</a>.
+ Although I own the book, and I've read it twice, I felt it was too 
+prescriptive-- if you see (x), then you must do (y). Any programmer 
+worth his or her salt should already be refactoring aggressively. It's 
+so essential to the craft that if you have to read a book to understand 
+how it works, you probably shouldn't be a programmer in the first place.
+</p><p>
+There's nothing wrong with codifying refactoring guidelines in a book. But the most important guideline is to <b>watch for warning signs in your own code-- so called <a href="http://en.wikipedia.org/wiki/Code_smell">"code smells"</a>.</b>
+</p><p>
+<img alt="A collection of smelly cheeses" class="at-xid-6a0120a85dcdae970b0120a86d6894970b" src="code-smells_data/6a0120a85dcdae970b0120a86d6894970b-pi.jpg" height="333" border="0" width="500">
+</p><p>
+Developing your "code nose" is something that happens early in your 
+programming career, if it's going to happen at all. I combined all the 
+documented code smells I could find into this reference; most of these 
+smells should be familiar to you.
+</p><p>
+<b>Code Smells Within Classes</b>
+</p>
+<table cellpadding="4" cellspacing="6" width="640">
+<tbody><tr>
+<td style="background-color: silver" valign="middle">Comments</td>
+<td style="" valign="top">
+    There's a fine line between comments that illuminate and comments 
+that obscure. Are the comments necessary? Do they explain "why" and not 
+"what"? Can you refactor the code so the comments aren't required? And 
+remember, you're writing comments for people, not machines.</td>
+</tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Long Method</td>
+        <td valign="top">
+            All other things being equal, a shorter method is easier to 
+read, easier to understand, and easier to troubleshoot. Refactor long 
+methods into smaller methods if you can.</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Long Parameter List</td>
+        <td valign="top">
+            The more parameters a method has, the more complex it is. 
+Limit the number of parameters you need in a given method, or use an 
+object to combine the parameters.</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Duplicated code</td>
+        <td valign="top">
+            Duplicated code is the bane of software development. Stamp 
+out duplication whenever possible. You should always be on the lookout 
+for more subtle cases of near-duplication, too. <a href="http://www.artima.com/intv/dry.html">Don't Repeat Yourself!</a></td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Conditional Complexity</td>
+        <td valign="top">
+            Watch out for large conditional logic blocks, particularly 
+blocks that tend to grow larger or change significantly over time. 
+Consider alternative object-oriented approaches such as decorator, 
+strategy, or state.</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Combinitorial Explosion</td>
+        <td valign="top">
+            You have lots of code that does <i>almost</i> the same 
+thing.. but with tiny variations in data or behavior. This can be 
+difficult to refactor-- perhaps using generics or an interpreter?</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Large Class</td>
+        <td valign="top">
+            Large classes, like long methods, are difficult to read, 
+understand, and troubleshoot. Does the class contain too many 
+responsibilities? Can the large class be restructured or broken into 
+smaller classes?</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Type Embedded in Name</td>
+        <td valign="top">
+            Avoid placing types in method names; it's not only 
+redundant, but it forces you to change the name if the type changes. </td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Uncommunicative Name</td>
+        <td valign="top">
+            Does the name of the method succinctly describe what that 
+method does? Could you read the method's name to another developer and 
+have them explain to you what it does? If not, rename it or rewrite it.</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Inconsistent Names</td>
+        <td style="" valign="top">
+            Pick a set of standard terminology and stick to it 
+throughout your methods. For example, if you have Open(), you should 
+probably have Close().</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Dead Code</td>
+        <td valign="top">
+            Ruthlessly delete code that isn't being used. That's why we have source control systems!</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Speculative Generality</td>
+        <td valign="top">
+            Write code to solve today's problems, and worry about 
+tomorrow's problems when they actually materialize. Everyone loses in 
+the "what if.." school of design. <a href="http://xp.c2.com/YouArentGonnaNeedIt.html">You (Probably) Aren't Gonna Need It</a>. </td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Oddball Solution</td>
+        <td valign="top">
+            There should only be one way of solving the same problem in 
+your code. If you find an oddball solution, it could be a case of poorly
+ duplicated code-- or it could be an argument for the adapter model, if 
+you really need multiple solutions to the same problem.</td>
+    </tr>
+    <tr>
+        <td style="background-color: silver" valign="middle">
+            Temporary Field</td>
+        <td valign="top">
+            Watch out for objects that contain a lot of optional or 
+unnecessary fields. If you're passing an object as a parameter to a 
+method, make sure that you're using all of it and not cherry-picking 
+single fields.</td>
+    </tr>
+</tbody></table>
+    <br>
+    <strong>Code Smells Between Classes</strong><br>
+    <br>
+    <table cellpadding="4" cellspacing="6" width="640">
+        <tbody><tr>
+            <td style="background-color: silver" valign="middle">
+                Alternative Classes with Different Interfaces</td>
+            <td valign="top">
+                If two classes are similar on the inside, but different 
+on the outside, perhaps they can be modified to share a common 
+interface.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Primitive Obsession</td>
+            <td valign="top">
+                Don't use a gaggle of primitive data type variables as a
+ poor man's substitute for a class. If your data type is sufficiently 
+complex, write a class to represent it.&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Data Class</td>
+            <td valign="top">
+                Avoid classes that passively store data. Classes should contain data <i>and</i> methods to operate on that data, too.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Data Clumps</td>
+            <td valign="top">
+                If you always see the same data hanging around together,
+ maybe it belongs together. Consider rolling the related data up into a 
+larger class.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Refused Bequest</td>
+            <td valign="top">
+                If you inherit from a class, but never use any of the 
+inherited functionality, should you really be using inheritance?</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Inappropriate Intimacy</td>
+            <td style="" valign="top">
+                Watch out for classes that spend too much time together, or classes that interface in inappropriate ways.
+                Classes should know as little as possible about each other.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Indecent Exposure</td>
+            <td style="" valign="top">
+                Beware of classes that unnecessarily expose their 
+internals. Aggressively refactor classes to minimize their public 
+surface. You should have a compelling reason for every item you make 
+public. If you don't, hide it.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Feature Envy</td>
+            <td valign="top">
+                Methods that make extensive use of another class may 
+belong in another class. Consider moving this method to the class it is 
+so envious of.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Lazy Class</td>
+            <td valign="top">
+                Classes should pull their weight. Every additional class
+ increases the complexity of a project. If you have a class that isn't 
+doing enough to pay for itself, can it be collapsed or combined into 
+another class?</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver;" valign="middle">
+                Message Chains</td>
+            <td style="" valign="top">
+                Watch out for long sequences of method calls or 
+temporary variables to get routine data. Intermediaries are dependencies
+ in disguise.&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Middle Man</td>
+            <td valign="top">
+                If a class is delegating all its work, why does it 
+exist? Cut out the middleman. Beware classes that are merely wrappers 
+over other classes or existing functionality in the framework.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Divergent Change</td>
+            <td valign="top">
+                If, over time, you make changes to a class that touch 
+completely different parts of the class, it may contain too much 
+unrelated functionality. Consider isolating the parts that changed in 
+another class.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Shotgun Surgery</td>
+            <td valign="top">
+                If a change in one class requires cascading changes in 
+several related classes, consider refactoring so that the changes are 
+limited to a single class.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Parallel Inheritance Hierarchies</td>
+            <td valign="top">
+                Every time you make a subclass of one class, you must 
+also make a subclass of another. Consider folding the hierarchy into a 
+single class.</td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Incomplete Library Class</td>
+            <td valign="top">
+                We need a method that's missing from the library, but 
+we're unwilling or unable to change the library to include the method. 
+The method ends up tacked on to some other class. If you can't modify 
+the library, consider isolating the method. </td>
+        </tr>
+        <tr>
+            <td style="background-color: silver" valign="middle">
+                Solution Sprawl</td>
+            <td valign="top">
+                If it takes five classes to do anything useful, you 
+might have solution sprawl. Consider simplifying and consolidating your 
+design.</td>
+        </tr>
+    </tbody></table>
+<p>
+This list was derived from the <a href="http://industriallogic.com/papers/smellstorefactorings.pdf">Smells to Refactorings PDF</a>, and the <a href="http://wiki.java.net/bin/view/People/SmellsToRefactorings">Smells to Refactorings Wiki</a>,
+ which also provide additional guidance on the specific refactorings 
+that might be helpful in each instance. The important thing, from my 
+perspective, isn't the refactoring-- it's <b>learning to recognize the scent of your own code</b>. 
+</p><p>
+And if you want examples of the stinkiest code imaginable, <a href="http://thc.org/root/phun/unmaintain.html">How to Write Unmaintainable Code</a> is a good place to start.
+</p><p>
+</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+
+
+ 
+<div class="posted">Posted by Jeff Atwood</div> 
+
+<div id="nrelate_related_placeholder"><div id="nrelate_related_0"><div class="nr_clear"></div><div class="nrelate nrelate_related nrelate_default nr_text nr_110"><div class="nrelate_related_col"><h3 class="nr_title">Related posts:</h3><div class="nr_inner"><ul><li><a class="nr_rc_link nr_link nr_internal" href="http://www.codinghorror.com/blog/archives/000212.html"><span class="nr_post_title">Is it Divorce?</span></a></li><li><a class="nr_rc_link nr_link nr_internal" href="http://www.codinghorror.com/blog/2004/11/free-as-in-beer.html"><span class="nr_post_title">Free as in Beer</span></a></li><li><a class="nr_rc_link nr_link nr_internal" href="http://www.codinghorror.com/blog/2013/08/the-code-keyboard.html"><span class="nr_post_title">The CODE Keyboard</span></a></li><li><a class="nr_rc_link nr_link nr_internal" href="http://www.codinghorror.com/blog/2013/07/rule-of-three.html"><span class="nr_post_title">The Rule of Three</span></a></li><li><a class="nr_rc_link nr_link nr_internal" href="http://www.codinghorror.com/blog/2013/10/you-dont-need-millions-of-dollars.html"><span class="nr_post_title">You Don't Need Millions of Dollars</span></a></li></ul></div><div style="clear:both;"></div></div></div><div class="nr_clear"></div></div></div> <script async="" type="text/javascript" src="code-smells_data/loader.js"></script>
+
+<div class="footernav">
+  
+  <div style="float:left;"><a rel="prev" href="http://www.codinghorror.com/blog/2006/05/snappy-answers-to-stupid-programming-questions.html">«&nbsp;Snappy Answers to Stupid Programming Questions</a></div> 
+  
+  
+  <div style="float:right;"><a rel="next" href="http://www.codinghorror.com/blog/2006/05/programmers-and-chefs.html">Programmers and Chefs&nbsp;»</a></div> 
+  
+</div>
+
+</div> <!-- blogbody -->
+
+
+
+
+<div class="comments-head" id="comments">33 Comments</div> 
+
+
+  <div class="comments-body jeff_atwood"> 
+  <p>There's also a nice, simplified taxonomy of code smells here:</p>
+
+<p><a href="http://www.soberit.hut.fi/mmantyla/BadCodeSmellsTaxonomy.htm" rel="nofollow">http://www.soberit.hut.fi/mmantyla/BadCodeSmellsTaxonomy.htm</a></p>
+
+<p>He (correctly, IMO) groups the smells into five general categories:</p>
+
+<p>Bloaters<br>
+OO Abusers<br>
+Change Preventers<br>
+Dispensables<br>
+Couplers</p>
+  <span class="comments-post" style="margin-left:20px">Jeff Atwood on May 19, 2006  4:50 AM</span> 
+  </div>
+
+  <div class="comments-body pinano"> 
+  <p>I found "How To Write Unmaintainable Code" about a year ago, and I 
+could not stop laughing.  Re-read it this morning, and I still can't 
+stop :-)</p>
+
+<p>Thanks, Jeff!</p>
+  <span class="comments-post" style="margin-left:20px">pinano on May 20, 2006  2:04 AM</span> 
+  </div>
+
+  <div class="comments-body factory"> 
+  <p>"Overload and Bewilder<br>
+In C++, overload library functions by using #define. That way it looks 
+like you are using a familiar library function where in actuality you 
+are using something totally different."<br>
+  Or, overload it to have an A and a W version.. :)</p>
+  <span class="comments-post" style="margin-left:20px">Factory on May 20, 2006  2:33 AM</span> 
+  </div>
+
+  <div class="comments-body joe"> 
+  <p>"The more parameters a method has, the more complex it is. Limit 
+the number of parameters you need in a given method, or use an object to
+ combine the parameters"</p>
+
+<p>Im just curious -- doesnt this violate some principle by having objects to tightly coupled?</p>
+  <span class="comments-post" style="margin-left:20px">joe on May 20, 2006  7:56 AM</span> 
+  </div>
+
+  <div class="comments-body rob_conery"> 
+  <p>Hey, I know that Cheese Shop! It's the one in Rockridge right next 
+to Bart! I bet you sip your latte and refactor away in the caffe next 
+door, with a splendid chunk of Osau Iraty and Triscuits you lucky dog...</p>
+
+<p>Sorry, nothing much else to contribute :). </p>
+  <span class="comments-post" style="margin-left:20px">Rob Conery on May 21, 2006  2:02 AM</span> 
+  </div>
+
+  <div class="comments-body jeff_atwood"> 
+  <p>Argh, I accidentally deleted Jeff Perrin's comment while cleaning up blog spam. My apologies, Jeff.</p>
+
+<p>As I recall, Jeff said that I erred in calling Refactoring 
+prescriptive. He said that the book actually encourages you to be 
+flexible.</p>
+  <span class="comments-post" style="margin-left:20px">Jeff Atwood on May 21, 2006  8:48 AM</span> 
+  </div>
+
+  <div class="comments-body robert_cain"> 
+  <p>I rarely pull rank on my team, but this time I've made this post required reading. Great stuff.</p>
+
+<p>That said, there's only one smell I'm not quite sold on. Data 
+Classes. I've found them quite handy when passing between classes (i.e. 
+Long Parameter List). Also useful when you have a parent / child type 
+relationship, and are basically just storing the data in a collection 
+for reference or display.</p>
+
+<p>Also I thought Ron Ruble made some interesting points about 
+maintenence coders. Often many get their start that way, and are told to
+ get in and get out as quickly as possibe with minimal impact to the 
+code. More changes require more testing, and all management wants is to 
+get it fixed as quick as possible, not sponsor a rewrite because it's 
+"smelly". </p>
+
+<p>Thanks again, great post!</p>
+
+<p>   Robert<br>
+</p>
+  <span class="comments-post" style="margin-left:20px">Robert Cain on May 21, 2006  9:59 AM</span> 
+  </div>
+
+  <div class="comments-body andrej_gaevskij"> 
+  <p>Great post Jeff!</p>
+  <span class="comments-post" style="margin-left:20px">Andrej Gaevskij on May 21, 2006 12:19 PM</span> 
+  </div>
+
+  <div class="comments-body patrick_mcelhaney"> 
+  <p>Actually, Jeff, the "code smells" metaphor came out of a discussion
+ between Martin Fowler and Kent Beck while Fowler was still writing the 
+Refactoring book. </p>
+
+<p>Together, they wrote chapter 3, "Bad Smells in Code," which is not prescriptive at all, but does present a catalog of smells.</p>
+
+<p>You may not be impressed by the refactoring catalog itself, but IMHO 
+you should at least add the first four chapters to your recommended 
+reading list.</p>
+
+<p></p>
+
+<p><br>
+</p>
+  <span class="comments-post" style="margin-left:20px">Patrick McElhaney on May 24, 2006  6:41 AM</span> 
+  </div>
+
+  <div class="comments-body kyralessa"> 
+  <p>I found the book most valuable for the non-reference part; for 
+instance, the discussion about how to explain just what you're doing 
+when you're refactoring was helpful for me.</p>
+
+<p>I also liked the example he used at the beginning, which seemed more 
+realistic and creative than a lot of the book examples I see (e.g. Kent 
+Beck's Money example in TDD by Example).  I did my first test-backed 
+refactoring by working through Fowler's movie rental code.</p>
+  <span class="comments-post" style="margin-left:20px">Kyralessa on May 25, 2006  6:14 AM</span> 
+  </div>
+
+  <div class="comments-body rob_conley"> 
+  <p>To me Refactoring is not "You see this then do this" but more "If 
+you want to this change, here are the steps to do it safely and 
+reliably".</p>
+
+<p>Don't get me wrong, your list of code smells are good but they what I
+ would call anti-patterns. I.e. patterns of bad code that should send up
+ a red flag.</p>
+  <span class="comments-post" style="margin-left:20px">Rob Conley on June  7, 2006  6:11 AM</span> 
+  </div>
+
+  <div class="comments-body dave"> 
+  <p>I am currently having to deal with, Long Method, Conditional 
+Complexity, Large Class, Refused Bequest, Inappropriate Intimacy, 
+Shotgun Surgery and Oddball Solution. Its pure hell.</p>
+  <span class="comments-post" style="margin-left:20px">Dave on January 25, 2007  9:11 AM</span> 
+  </div>
+
+  <div class="comments-body shrike"> 
+  <p>Great article, but I also have a hold out for targeted usage of 
+DataClasses; they have their uses when all you need to do is buffer a 
+"record" style collection; particularly if a "record" contains one or 
+more internal collections as well. </p>
+  <span class="comments-post" style="margin-left:20px">Shrike on March 17, 2007 12:23 PM</span> 
+  </div>
+
+  <div class="comments-body steve_freeman"> 
+  <p>Surely the cheese shop in the photot is the Neals Yard Dairy? Purevyors of the famous Stinking Bishop...</p>
+  <span class="comments-post" style="margin-left:20px">Steve Freeman on May  2, 2007 10:07 AM</span> 
+  </div>
+
+  <div class="comments-body daniel_cadenas"> 
+  <p>Some points of disagreement:</p>
+
+<p>1) Assuming that you are right in that most of us know how to 
+refactor, I think that's because experience gave us the needed 
+knowledge. Time and pain was needed. This time and pain, as in any 
+knowledge area, can be reduced by reading books, like Fowler's.</p>
+
+<p>2) Apart from this, I think even a developer with experience and 
+knowledge of most refactorings could miss some smells. We are humans and
+ we acquire bad habits.</p>
+
+<p>3) A big part of the knowledge gained with experience is too 
+intuitive and that brings some problems. When things are intuitive and 
+you suddenly find someone that doesn't share your intuition you have to 
+fight back with solid explicit arguments. Fowler's book helps you ease 
+the work needed to find those arguments letting you show clearly why 
+your intuition is the way it is. You can do it yourself of course, but 
+it's easier to reuse the effort someone else did, if you share it of 
+course.</p>
+
+<p>4) The book defines a vocabulary to deal with our intuition or 
+implicit concepts, that is very very important. Now we can share it and 
+we can communicate more efficiently. The same advantage we discovered 
+after design patterns appeared.</p>
+
+<p>5) You agree with Fowler that smells are important. The book is a 
+reference to smells. IMO refactoring is more about identifying design 
+problems (smells) than about the relatively simple things needed to make
+ them disappear, but it's both of course.</p>
+
+<p>6) Things that are important, like smells, must be made explicit so 
+the problem can be easily studied and possibly build some more knowledge
+ on higher level concepts. One of those higher level concepts that could
+ be further developed was the development philosophy of Continuous 
+Design in which a core concept is refactoring.</p>
+
+<p>7) I think there's a confusion between simplicity and importance. Not only complicated books are important.</p>
+  <span class="comments-post" style="margin-left:20px">Daniel Cadenas on December  8, 2007  1:17 AM</span> 
+  </div>
+
+  <div class="comments-body kg"> 
+  <p>So, what's the difference between the "middleman" code smell and the "facade" design pattern?</p>
+  <span class="comments-post" style="margin-left:20px">KG on December 27, 2007  2:11 AM</span> 
+  </div>
+
+  <div class="comments-body adrian"> 
+  <p>The link to How to Write Unmaintainable Code was blocked by our 
+firewall with a nice big red ACCESS DENIED.  Category: Computer Crime.</p>
+
+<p>Had me rolling in my cube for a while.</p>
+  <span class="comments-post" style="margin-left:20px">Adrian. on February 21, 2008  6:22 AM</span> 
+  </div>
+
+  <div class="comments-body youtube"> 
+  <p>Thanks for responding Jeff. That's a good point about usability.</p>
+  <span class="comments-post" style="margin-left:20px">youtube on March 18, 2008 11:37 AM</span> 
+  </div>
+
+  <div class="comments-body ken_mccormack"> 
+  <p>I think you're just jealous you didn't write it?  :)</p>
+
+<p>The Fowler refactoring book is great for junior developers - in 
+saying it's "too prescriptive" I think you completely miss the point -<br>
+what's important is that it introduces the object thinking that underlies his process.</p>
+
+<p>It's a great introduction to object thinking and more complex issues 
+such as use of interface inheritance and test driven development - would
+ recommend it to my junior devs... it should be required reading for all
+ .NET developers<br>
+</p>
+  <span class="comments-post" style="margin-left:20px">Ken McCormack on April 29, 2008  9:03 AM</span> 
+  </div>
+
+  <div class="comments-body petter_hesselberg"> 
+  <p>The first time I read Fowler's book my response was "eh" -- most of
+ the refactorings described stuff I'd been doing for years, stuff that 
+should be second nature to any competent programmer. It was only when I 
+first started using an IDE with good refactoring support that I realized
+ the true value of the book: _Naming_ the refactorings. Not unlike 
+patterns, in that respect.</p>
+  <span class="comments-post" style="margin-left:20px">Petter Hesselberg on May 21, 2008  7:44 AM</span> 
+  </div>
+
+  <div class="comments-body john_boal"> 
+  <p>Ward Cunningham also has a nice set of code smells at his site: <a href="http://c2.com/xp/CodeSmell.html" rel="nofollow">http://c2.com/xp/CodeSmell.html</a></p>
+
+<p>If a code stench is a really bad code smell, what would we call an often recurring smell... a code stink?</p>
+
+<p>/J</p>
+  <span class="comments-post" style="margin-left:20px">John Boal on December  3, 2008  4:46 AM</span> 
+  </div>
+
+  <div class="comments-body waheed"> 
+  <p><br>
+You said:</p>
+
+<p>I It's so essential to the craft that if you have to read a book to 
+understand how it works, you probably shouldn't be a programmer in the 
+first place. /I</p>
+
+<p>Looking at the popularity of the book in programmers community, your 
+statement is suggesting that most of the programmers are not 
+programmers.</p>
+
+<p> </p>
+  <span class="comments-post" style="margin-left:20px">waheed on December 14, 2008  8:29 AM</span> 
+  </div>
+
+  <div class="comments-body john_macintyre"> 
+  <p>You may find it humourous that when I saw the smell for 'Dead 
+Code', I instictively tried to vote it up.  Spending too much time on 
+StackOverflow.</p>
+  <span class="comments-post" style="margin-left:20px">John MacIntyre on February  9, 2009  8:28 AM</span> 
+  </div>
+
+  <div class="comments-body archimedes_trajano"> 
+  <p>I like the Refactoring book primarily because it gives names to the
+ stuff I already do.  The main advantage of that is communication with 
+other people:</p>
+
+<p>* for junior programmers, the book gives them the steps on how to do things<br>
+* for senior programmers, the book allows me to talk with other senior programmers that read the book with less words.</p>
+
+<p>Comments: I like to know the what in the method javadocs normally, 
+because I don't want to go through the code to figure what it does 
+especially if I am just a consumer of the interface.  I do understand 
+the importance of the why as well.</p>
+
+<p>Conditional Compexity: sometimes is necessary.  (Comments come into 
+play) writing another API to do validations for low level things (e.g. 
+match string if provided times 10 search keys) may yield to something 
+that looks complex, but I see no need to refactor this as it will make 
+things harder to debug if you're going across several classes when 
+having everything in one validate method is sufficient.</p>
+  <span class="comments-post" style="margin-left:20px">Archimedes Trajano on April 11, 2009  3:21 AM</span> 
+  </div>
+
+  <div class="comments-body club_penguin"> 
+  <p>There's only one smell I'm not quite sold on. Data Classes. I've 
+found them quite handy when passing between classes i.e. Long Parameter 
+List. Also useful when you have a parent / child type relationship, and 
+are basically just storing the data in a collection for reference or 
+display.</p>
+  <span class="comments-post" style="margin-left:20px">club penguin on May 31, 2009  8:02 AM</span> 
+  </div>
+
+  <div class="comments-body fx85"> 
+  <p>So, what's the difference between the "middleman" code smell and the "facade" design pattern?</p>
+
+<p><a href="http://jaber.mysinablog.com/" rel="nofollow">http://jaber.mysinablog.com/</a><br>
+<a href="http://blog.qooza.hk/jaber" rel="nofollow">http://blog.qooza.hk/jaber</a><br>
+</p>
+  <span class="comments-post" style="margin-left:20px">fx85 on July 27, 2009  9:32 AM</span> 
+  </div>
+
+  <div class="comments-body grow_taller"> 
+  <p>Hey, I know that Cheese Shop! It's the one in Rockridge right next 
+to Bart! I bet you sip your latte and refactor away in the caffe next 
+door, with a splendid chunk of Osau Iraty and Triscuits you lucky dog...</p>
+  <span class="comments-post" style="margin-left:20px">grow taller on August 12, 2009  5:03 AM</span> 
+  </div>
+
+  <div class="comments-body paul"> 
+  <p>The link to How to Write Unmaintainable Code (<a href="http://thc.org/root/phun/unmaintain.html%29" rel="nofollow">http://thc.org/root/phun/unmaintain.html)</a> doesn't seem to work any more - I presume this is same article: <a href="http://freeworld.thc.org/root/phun/unmaintain.html" rel="nofollow">http://freeworld.thc.org/root/phun/unmaintain.html</a></p>
+  <span class="comments-post" style="margin-left:20px">Paul on August 13, 2009  6:38 AM</span> 
+  </div>
+
+  <div class="comments-body pratik"> 
+  <p>Got confused between "middleman" code smell and facade design pattern<br>
+"middleman" code smell correction contradicts with facade design pattern implementation.</p>
+  <span class="comments-post" style="margin-left:20px">Pratik on August 18, 2009  6:40 AM</span> 
+  </div>
+
+  <div class="comments-body ron_ruble"> 
+  <p> Any programmer worth his or her salt should already be refactoring aggressively. </p>
+
+<p>But as a practical matter, many organizations actively inhibit 
+refactoring, and teach the programmers that "this code is too complex to
+ change."</p>
+
+<p> It's so essential to the craft that if you have to read a book to understand how it <br>
+ works, you probably shouldn't be a programmer in the first place.</p>
+
+<p>A little overzealous, in my opinion. -If- the programmers have been 
+trained correctly, they should have picked up some form of refactoring 
+skills. But in many cases, they haven't; they've even been trained that 
+old, crufty code is gold and must -never- be changed.</p>
+
+<p>I don't feel it's reasonable to imply all these coders are a dead loss because they got started on the wrong foot.</p>
+
+<p> There's nothing wrong with codifying refactoring guidelines in a book. But the most important <br>
+ guideline is to watch for warning signs in your own code-- so called "code smells". </p>
+
+<p>If your job is 50% writing your own code. Lots of maintenance 
+programmers write very little code from scratch, and spent almost all 
+there time working with someone else's crufty code.</p>
+
+<p> Developing your "code nose" is something that happens early in your programming career, <br>
+ if it's going to happen at all.</p>
+
+<p>9 times out of ten, you're right. But every time someone says 
+something like this, in any field, someone appears as an outlier on the 
+skills graph.</p>
+
+<p>You make some good points; I just feel you've overstated your arguments on this one.</p>
+  <span class="comments-post" style="margin-left:20px">Ron Ruble on February  6, 2010  9:47 PM</span> 
+  </div>
+
+  <div class="comments-body derek_pierson"> 
+  <p>I think that refactoring alone solves only part of the problem. To 
+really make the code better you must have a good understanding of unit 
+testing and patterns in addition to refactoring. I don’t feel 
+comfortable refactoring code that has no unit tests so the first thing I
+ do when I have to work on someone else’s crud code is to add unit 
+tests. </p>
+  <span class="comments-post" style="margin-left:20px">Derek Pierson on February  6, 2010  9:47 PM</span> 
+  </div>
+
+  <div class="comments-body games_r_us_virginia"> 
+  <p>Everyone knows refactoring is easy. Learning to write code is the hard part.</p>
+
+<p><a href="http://www.buyawholesalegift.com/" rel="nofollow">Wholesale Catalogs</a></p>
+  <span class="comments-post" style="margin-left:20px"><a rel="nofollow" target="_blank" title="http://profile.typepad.com/gamesr" href="http://profile.typepad.com/gamesr">Games R Us Virginia</a> on July 30, 2010  1:10 PM</span> 
+  </div>
+
+  <div class="comments-body james_smits"> 
+  <p>I know this post is very old, but there is a smell I didn't see 
+documented here which is writing code to trick the compiler. Like an 
+else statement with a condition that will never fire but pleases the 
+compiler.</p>
+  <span class="comments-post" style="margin-left:20px"><a rel="nofollow" target="_blank" title="http://profile.typepad.com/6p0133f4d861a8970b" href="http://profile.typepad.com/6p0133f4d861a8970b">James Smits</a> on September 16, 2011  1:30 PM</span> 
+  </div>
+	
+
+
+
+<div id="endcomments"></div> 
+
+
+
+	<p class="comments-closed">
+		The comments to this entry are closed.
+	</p>
+
+
+
+</div> <!-- blog -->
+
+<div id="footer">Content © 2013 <a rel="author" href="https://profiles.google.com/codinghorror1">Jeff Atwood</a>.  Logo image used with permission of the author. © 1993 Steven C. McConnell. All Rights Reserved.</div>  
+
+</div> <!-- container -->
+
+<div id="links"> 
+
+
+<div class="side">
+<div class="sidetitle">Newer »</div>
+<a href="http://www.codinghorror.com/blog/2006/05/programmers-and-chefs.html">Programmers and Chefs</a>
+</div>
+
+
+
+<div class="side">
+<div class="sidetitle" style="padding-top:5px">« Older</div>
+<a href="http://www.codinghorror.com/blog/2006/05/snappy-answers-to-stupid-programming-questions.html">Snappy Answers to Stupid Programming Questions</a>
+</div> 
+
+ 
+<p></p> 
+
+<div class="side"> 
+<!-- 
+
+<a href="http://www.codinghorror.com/blog/">Home</a> &nbsp; &nbsp; <a href="http://www.codinghorror.com/blog/archives.html">Browse All Posts</a> 
+<p></p> 
+
+-->
+
+<!--
+<div style="margin-bottom:15px">
+<a href="http://www.slickedit.com/go.php?c=codinghorror&d=se_product" rel="nofollow"><img alt="Celebrate SlickEdit's 25th Anniversary with 25% off SlickEdit 2013 Purchases"  src="http://www.codinghorror.com/.a/6a0120a85dcdae970b019affb67f79970d-800wi" width="208" height="177" /></a><br/>
+<div style="text-align:center"><a href="http://www.slickedit.com/go.php?c=codinghorror&d=se_product" rel="nofollow">Trial download</a> SlickEdit today!</div>
+</div>
+-->
+ 
+<!--
+<div id="influads_block" class="influads_block" style="width:208px !important; align:center;"> </div> 
+
+<script async>
+(function(){var acc='acc_843d584_pub';var st='css';var or='130';var e=document.getElementsByTagName('script')[0];var d=document.createElement('script');d.src=('https:' == document.location.protocol ?'https://' : 'http://') +'engine.influads.com/show/'+or+'/'+st+'/'+acc;d.type='text/javascript';d.async=true;d.defer=true; e.parentNode.insertBefore(d,e);})();
+</script>
+-->
+
+<div id="hireme" class="hireme codinghorror" style="min-height:220px"> <a href="http://careers.stackoverflow.com/jobs?a=aEE" class="top" target="_blank"></a> <ul class="jobs"> <li> <a href="http://careers.stackoverflow.com/jobs/47826/software-engineer-batchblue-software-llc?a=WknpV54c" target="_blank" title="Software Engineer at BatchBlue Software. Click to learn more."> Software Engineer<br> <span class="company">BatchBlue Software</span> <span class="location">Providence, RI / remote</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/49485/php-backend-developer-wisepricer-wise-commerce-inc?a=YlQedYbK" target="_blank" title="PHP Backend Developer at WisePricer / Wise Commerce. Click to learn more."> PHP Backend Developer<br> <span class="company">WisePricer / Wise Commerce</span> <span class="location">Tel Aviv, Israel</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/48107/senior-server-side-developer-appsflyer?a=WFDXwg2Q" target="_blank" title="Senior server-side developer at AppsFlyer. Click to learn more."> Senior server-side developer<br> <span class="company">AppsFlyer</span> <span class="location">Herzliya, Israel</span> </a> </li> </ul> <img alt="" class="impression" src="code-smells_data/WknpV54c-YlQedYbK-WFDXwg2Q-aEE.gif" style="display:none"></div>
+<script async="">
+    setTimeout(function () {
+        var a = document.createElement("script");
+        var b = document.getElementsByTagName('script')[0];
+        a.src = "http://careers.stackoverflow.com/ad/js";
+        a.async = true; 
+        a.type = "text/javascript"; 
+        b.parentNode.insertBefore(a, b);
+    }, 5);
+</script>
+
+
+
+
+<p></p> 
+<div class="sidetitle">Resources</div> 
+<a href="http://www.codinghorror.com/blog/2004/02/about-me.html">About Me</a><br>
+<a href="http://twitter.com/codinghorror">@codinghorror</a><br>
+<a href="http://www.discourse.org/">discourse.org</a><br>
+<a href="http://stackexchange.com/">stackexchange.com</a><br>
+<a href="http://www.codinghorror.com/blog/2004/02/recommended-reading-for-developers.html">Recommended Reading</a>
+<p></p>
+<div class="syndicate"> 
+<a href="http://feeds.feedburner.com/codinghorror" rel="alternate" type="application/rss+xml"><img src="code-smells_data/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0" height="16" width="16">&nbsp;Subscribe in a reader</a> 
+<br> 
+<a href="http://feedburner.google.com/fb/a/mailverify?uri=codinghorror&amp;loc=en_US"><img src="code-smells_data/mail.png" alt="" style="vertical-align:middle;border:0" height="16" width="16">&nbsp;Subscribe via email</a> 
+<p></p>
+<div class="side"> 
+Coding Horror has been continuously published since 2004. Browse the <b><a href="http://www.codinghorror.com/blog/archives.html">complete post archives</a></b>.
+</div> 
+<p></p> 
+<table style="border-spacing:0px">
+<tbody><tr>
+<td style="padding-right:10px">
+<img src="code-smells_data/codinghorror.gif" style="border:0" alt="Count of RSS readers" height="26" width="88"> 
+</td>
+<td style="padding-bottom:8px">
+<a href="http://my.statcounter.com/project/standard/stats.php?project_id=2600027&amp;guest=1">Traffic Stats</a> 
+</td>
+</tr>
+</tbody></table>
+</div> 
+
+
+</div>
+
+</div> <!-- links -->
+ 
+<script> 
+x=window.document.getElementsByTagName('div'); for(var i = 0; i < x.length; i++) { if (x[i].className == "comments-body") { if (x[i].innerHTML.search(/jeff atwood<\/a>/i) != -1) { x[i].style.backgroundColor = "#FFECC7"; } } }
+</script>
+
+<script>
+var sc_project=2600027; 
+var sc_invisible=0; 
+var sc_partition=25; 
+var sc_security="dcff5548"; 
+</script> 
+ 
+<script async="" src="code-smells_data/counter.js"></script> 
+<noscript><a href="http://www.statcounter.com/"><img  src="http://c26.statcounter.com/counter.php?sc_project=2600027&amp;java=0&amp;security=dcff5548&amp;invisible=0" alt="web metrics"></a> </noscript> 
+
+<!-- Begin comScore Tag -->
+<script>
+document.write(unescape("%3Cscript src='" + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js'%3E%3C/script%3E"));
+</script><script src="code-smells_data/beacon.js"></script>
+<script>
+COMSCORE.beacon({
+  c1: 2,
+  c2: "6035669",
+  c3: "",
+  c4: "http://www.codinghorror.com/blog/2006/05/code-smells.html",
+  c5: "",
+  c6: "",
+  c15: ""
+});
+</script>
+<noscript>
+  <img src="http://b.scorecardresearch.com/b?c1=2&c2=6035669&c3=&c4=http%3A%2F%2Fwww.codinghorror.com%2Fblog%2F2006%2F05%2Fcode-smells.html&c5=&c6=&c15=&cv=1.3&cj=1" style="display:none" width="0" height="0" alt="" />
+</noscript>
+<!-- End comScore Tag -->
+<!-- Begin disqus Tag -->
+
+<!-- End disqus Tag -->
+<!-- ph=1 -->
+<div style="display: none;"><iframe frameborder="0"></iframe></div></body></html>
